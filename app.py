@@ -3,6 +3,7 @@
 # Database Project
 
 from flask import Flask, render_template, request
+import sqlite3
 #import utils
 
 # app is an instance of the Flask class
@@ -11,8 +12,12 @@ app = Flask(__name__)
 @app.route("/",methods=["GET","POST"])
 @app.route("/<title>")
 def home(title=None):
-	if title==None:
-		return render_template("index.html")
+        conn = sqlite3.connect("blogs.db")
+        c = conn.cursor()
+        if title==None:
+                q = "SELECT title FROM blogs"
+                result = c.execute(q)
+                return render_template("index.html",titles=result)
 
 if __name__=="__main__":
     # set the instance variable debug to True
