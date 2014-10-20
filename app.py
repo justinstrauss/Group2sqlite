@@ -5,7 +5,7 @@
 from flask import Flask, render_template, request
 import sqlite3
 import populate
-#import utils
+import os.path
 
 # app is an instance of the Flask class
 app = Flask(__name__)
@@ -13,7 +13,9 @@ app = Flask(__name__)
 @app.route("/",methods=["GET","POST"])
 @app.route("/<title>")
 def home(title=None):
-        populate.setup()
+        if not os.path.isfile("blogs.db"):
+                populate.setup()
+        #run populate.py only if blogs.db is not present
         conn = sqlite3.connect("blogs.db")
         c = conn.cursor()
         if title==None:
