@@ -24,7 +24,9 @@ def home(title=None):
                 t = title.replace("_"," ")
                 q = '''SELECT title,entry,id FROM blogs
                        WHERE title = ''' + t
-
+                result = c.execute(q)
+                return render_template("blog.html",blogs=result)
+                
 if __name__=="__main__":
     # set the instance variable debug to True
     app.debug = True
