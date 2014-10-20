@@ -18,6 +18,10 @@ def home(title=None):
                 q = "SELECT title FROM blogs"
                 result = c.execute(q)
                 return render_template("index.html",titles=result)
+        else:
+                t = title.replace("_"," ")
+                q = '''SELECT title,entry,id FROM blogs
+                       WHERE title = ''' + t
 
 if __name__=="__main__":
     # set the instance variable debug to True
