@@ -4,7 +4,7 @@
 
 from flask import Flask, render_template, request
 import sqlite3
-import populate.py
+import populate
 #import utils
 
 # app is an instance of the Flask class
@@ -13,7 +13,7 @@ app = Flask(__name__)
 @app.route("/",methods=["GET","POST"])
 @app.route("/<title>")
 def home(title=None):
-        setup()
+        populate.setup()
         conn = sqlite3.connect("blogs.db")
         c = conn.cursor()
         if title==None:
