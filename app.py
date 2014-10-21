@@ -37,7 +37,9 @@ def home(title=None):
 
                 return render_template("post.html",text=r,comments=comments)
 
-
+@app.route("/about")
+def about():
+        return render_template("about.html")
                 
 @app.route("/post")
 @app.route("/1")
