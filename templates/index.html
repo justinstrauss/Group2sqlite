@@ -2,6 +2,11 @@
 <head>
 <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
 <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
+<style>
+.form-custom{
+height:150px;
+}
+</style>
 </head>
 
 <div class="pure-menu pure-menu-open pure-menu-horizontal">
@@ -10,6 +15,9 @@
     <ul>
         <li class="pure-menu-selected"><a href="/">Home</a></li>
         <li><a href="/about">About</a></li>
+	<li><a href="/all"> All Posts </a> </li>
+
+	
     </ul>
 </div>
 <hr>
@@ -21,10 +29,10 @@
 <form class="pure-form" align="center" method="POST">
     <fieldset>
       
-    <input class="pure-input-1-2" id="title" type="text" placeholder="Write your title here..." name="title">   
+    <input class="pure-input-1-4" id="title" type="text" placeholder="Write your title here..." name="title">   
     <br><br>
 
-    <input class="pure-input-1-1" id="entry" type="text" placeholder="Write your entry here..." name="entry">
+    <textarea class="form-custom" id="entry" type="text"  placeholder="Write your entry here..." name="entry"></textarea>
     <br><br>
     
     <div class="pure-controls">
