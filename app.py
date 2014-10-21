@@ -24,7 +24,7 @@ def home(title=None):
             a = request.form["name"]
             e = request.form["entry"]
             q = '''SELECT MAX(id) FROM blogs'''
-            maxID = c.execute(q).next()[0] #gets maxID in maxID to assign unique ID            
+            maxID = c.execute(q).next()[0] #gets maxID in ID column to assign a new unique ID            
             if not (len(t) == 0 or len(a) == 0 or len(e) == 0):
                 insert_post(t,a,e,str(maxID + 1))
                 
