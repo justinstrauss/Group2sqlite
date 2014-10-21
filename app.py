@@ -4,7 +4,7 @@
 
 from flask import Flask, render_template, request
 import sqlite3
-import populate
+from populate import insert_post, insert_comment
 import os.path
 
 # app is an instance of the Flask class
@@ -13,53 +13,56 @@ app = Flask(__name__)
 @app.route("/",methods=["GET","POST"])
 @app.route("/<title>")
 def home(title=None):
-        if not os.path.isfile("blogs.db"):
-                populate.setup()
-        #run populate.py only if blogs.db is not present
-        conn = sqlite3.connect("blogs.db")
-        c = conn.cursor()
-        if title==None:
-                q = "SELECT title FROM blogs"
-                result = c.execute(q)
-                return render_template("index.html",titles=result)
-        else:
-                #get blog whose title matches the url
-                t = title.replace("_"," ")
-                q = '''SELECT title,name,entry,id FROM blogs 
-                       WHERE title = "%s"''' % t
-                result = c.execute(q)
-                r = result.next()
+    if not os.path.isfile("blogs.db"):
+        populate.setup()
+    #run populate.py only if blogs.db is not present
+    conn = sqlite3.connect("blogs.db")
+    c = conn.cursor()
+    if title==None:
+        if request.method == "POST":
+            t = request.form["title"]
+            a = request.form["name"]
+            e = request.form["entry"]
+            q = '''SELECT MAX(id) FROM blogs'''
+            maxID = c.execute(q).next()[0] #gets maxID in maxID to assign unique ID            
+            if not (len(t) == 0 or len(a) == 0 or len(e) == 0):
+                insert_post(t,a,e,str(maxID + 1))
+                
+        q = "SELECT title FROM blogs"
+        result = c.execute(q)
+        return render_template("index.html",titles=result)
+    else:
+        #get blog whose title matches the url
+        t = title.replace("_"," ")
+        q = '''SELECT title,name,entry,id FROM blogs 
+        WHERE title = "%s"''' % t
+        result = c.execute(q)
+        r = result.next()
 
-                #find all comments whose id corresponds to that of the blog
-                q = '''SELECT name,comment FROM comments 
-                       WHERE id = %s''' % r[3]
-                comments = c.execute(q)
+        #find all comments whose id corresponds to that of the blog
+        q = '''SELECT name,comment FROM comments 
+               WHERE id = %s''' % r[3]
+        comments = c.execute(q)
 
-                return render_template("post.html",text=r,comments=comments)
+        return render_template("post.html",text=r,comments=comments)
 
 @app.route("/about")
 def about():
         return render_template("about.html")
-                
-@app.route("/post")
-@app.route("/1")
-@app.route("/2")
-def post():
-    f = open("blogposts.csv")
-    data = f.split("\n")
-    f.close()
-    for n in data:
-        number = 1
-        return render_template("post.html",text = data[number])
 
 @app.route("/all")
 def all():
     f = open("blogposts.csv")
-    data = f.read().split("\n")
+    data = f.read()
     f.close()
-    return render_template("all.html",text = data)
-
-    
+    data = data.split("\n")
+    final = []
+    for n in data:
+        placeholder = n.split(",")
+        final.append(placeholder)
+    final.remove(["title","name","entry","id"])
+    return render_template("all.html",text = final)
+               
 if __name__=="__main__":
     # set the instance variable debug to True
     app.debug = True
