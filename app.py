@@ -13,6 +13,9 @@ app = Flask(__name__)
 @app.route("/",methods=["GET","POST"])
 @app.route("/<title>")
 def home(title=None):
+        f = open("blogposts.csv")
+        data = f.split("\n")
+        f.close()
         if not os.path.isfile("blogs.db"):
                 populate.setup()
         #run populate.py only if blogs.db is not present
@@ -21,7 +24,7 @@ def home(title=None):
         if title==None:
                 q = "SELECT title FROM blogs"
                 result = c.execute(q)
-                return render_template("index.html",titles=result,range = range(result.len()))
+                return render_template("index.html",titles=result,range = range(data.len()))
         else:
                 t = title.replace("_"," ")
                 q = '''SELECT title,entry,id FROM blogs
