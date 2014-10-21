@@ -13,9 +13,6 @@ app = Flask(__name__)
 @app.route("/",methods=["GET","POST"])
 @app.route("/<title>")
 def home(title=None):
-        f = open("blogposts.csv")
-        data = f.split("\n")
-        f.close()
         if not os.path.isfile("blogs.db"):
                 populate.setup()
         #run populate.py only if blogs.db is not present
@@ -24,13 +21,21 @@ def home(title=None):
         if title==None:
                 q = "SELECT title FROM blogs"
                 result = c.execute(q)
-                return render_template("index.html",titles=result,range = range(data.len()))
+                return render_template("index.html",titles=result)
         else:
+                #get blog whose title matches the url
                 t = title.replace("_"," ")
-                q = '''SELECT title,entry,id FROM blogs
-                       WHERE title = ''' + t
+                q = '''SELECT title,name,entry,id FROM blogs 
+                       WHERE title = "%s"''' % t
                 result = c.execute(q)
-                return render_template("blog.html",blogs=result)
+                r = result.next()
+
+                #find all comments whose id corresponds to that of the blog
+                q = '''SELECT name,comment FROM comments 
+                       WHERE id = %s''' % r[3]
+                comments = c.execute(q)
+
+                return render_template("post.html",text=r,comments=comments)
 
 
                 

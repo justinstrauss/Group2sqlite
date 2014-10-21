@@ -11,13 +11,13 @@ def setup():
 
     c.execute("CREATE TABLE comments (name TEXT, comment TEXT, id INTEGER)")
     
-    base = 'INSERT INTO blogs VALUES("%(title)s","%(name)s", "%(entry)s",%(id)s)'
+    base = '''INSERT INTO blogs VALUES("%(title)s","%(name)s", "%(entry)s",%(id)s)'''
     for a in csv.DictReader(open("blogposts.csv")):
         i = base%a
         print i
         c.execute(i)
         
-    base = 'INSERT INTO comments VALUES("%(name)s","%(comment)s",%(id)s)'
+    base = '''INSERT INTO comments VALUES("%(name)s","%(comment)s",%(id)s)'''
     for a in csv.DictReader(open("comments.csv")):
         i = base%a
         print i
