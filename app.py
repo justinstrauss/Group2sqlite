@@ -52,7 +52,14 @@ def post():
         number = 1
         return render_template("post.html",text = data[number])
 
+@app.route("/all")
+def all():
+    f = open("blogposts.csv")
+    data = f.read().split("\n")
+    f.close()
+    return render_template("all.html",text = data)
 
+    
 if __name__=="__main__":
     # set the instance variable debug to True
     app.debug = True
