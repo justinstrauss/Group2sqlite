@@ -6,8 +6,8 @@
 
 <div class="pure-menu pure-menu-open pure-menu-vertical">
     <ul>
-        {% for title in titles %}
-        <li><a href="/{{title[0].replace(' ','_')}}">{{ title[0] }}</a></li>
+        {% for index in titles %}
+        <li><a href="/{{index}}">{{ title[index] }}</a></li>
         {% endfor %}
     </ul>
 </div>
