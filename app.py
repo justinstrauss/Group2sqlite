@@ -19,20 +19,27 @@ def home(title=None):
     conn = sqlite3.connect("blogs.db")
     c = conn.cursor()
     if title==None:
+        error = False;
         if request.method == "POST":
             t = request.form["title"]
             a = request.form["name"]
             e = request.form["entry"]
             q = '''SELECT MAX(id) FROM blogs'''
             maxID = c.execute(q).next()[0] #gets maxID in ID column to assign 
-                                           #a new unique ID            
+                                           #a new unique ID
+            q = '''SELECT title FROM blogs'''
+            titleCheck = c.execute(q)
+            titleCheck = [w[0] for w in titleCheck]
             if not (len(t) == 0 or len(a) == 0 or len(e) == 0):
-                populate.insert_post(t,a,e,str(maxID + 1))
+                if t in titleCheck:
+                    error = True
+                else:
+                    populate.insert_post(t,a,e,str(maxID + 1))
                 
         q = "SELECT title FROM blogs"
         result = c.execute(q)
         result = [o for o in result][::-1]
-        return render_template("index.html",titles=result)
+        return render_template("index.html",titles=result,haserror=error)
     else:
         #get blog whose title matches the url
         t = title.replace("_"," ")
