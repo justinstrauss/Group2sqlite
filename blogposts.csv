@@ -1,5 +1,5 @@
-title,name,entry,id
-"Albert's Favorite Courses","Albert","I love Soft Dev.",1
-"Leslie's Favorite Books","Leslie","The Great Gatsby was interesting.",2
-"Justin's Saturday","Justin","I went to New Jersey.",3
-"Alex's Sunday","Alex","I worked on college apps.",4
+title,name,entry,id,time
+"Albert's Favorite Courses","Albert","I love Soft Dev.",1,"10/19/14 9:54:12"
+"Leslie's Favorite Books","Leslie","The Great Gatsby was interesting.",2,"10/19/14 10:11:15"
+"Justin's Saturday","Justin","I went to New Jersey.",3,"10/19/14 10:11:55"
+"Alex's Sunday","Alex","I worked on college apps.",4,"10/19/14 10:30:40"

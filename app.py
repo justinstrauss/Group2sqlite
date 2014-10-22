@@ -6,6 +6,7 @@ from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 import populate
 import os.path
+from time import strftime
 
 # app is an instance of the Flask class
 app = Flask(__name__)
@@ -34,7 +35,9 @@ def home(title=None):
                 if t in titleCheck:
                     error = True
                 else:
-                    populate.insert_post(t,a,e,str(maxID + 1))
+                    clock = str(strftime("%I:%M:%S %m/%d/%Y"))
+                    print clock
+                    populate.insert_post(t,a,e,str(maxID + 1),clock)
                 
         q = "SELECT title FROM blogs"
         result = c.execute(q)
@@ -43,7 +46,7 @@ def home(title=None):
     else:
         #get blog whose title matches the url
         t = title.replace("_"," ")
-        q = '''SELECT title,name,entry,id FROM blogs 
+        q = '''SELECT title,name,entry,id,time FROM blogs 
         WHERE title = "%s"''' % t
         result = c.execute(q)
         try:
@@ -60,6 +63,7 @@ def home(title=None):
         #find all comments whose id corresponds to that of the blog
         q = '''SELECT name,comment FROM comments 
                WHERE id = %s''' % r[3]
+        print "q " + q
         comments = c.execute(q)
         
         return render_template("post.html",text=r,comments=comments)
@@ -96,4 +100,4 @@ if __name__=="__main__":
     # set the instance variable debug to True
     app.debug = True
     # call the run method
-    app.run(port = 5005)
+    app.run()
