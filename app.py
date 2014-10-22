@@ -46,7 +46,10 @@ def home(title=None):
         q = '''SELECT title,name,entry,id FROM blogs 
         WHERE title = "%s"''' % t
         result = c.execute(q)
-        r = result.next()
+        if result.any():
+            r = result.next()
+        else:
+            return redirect('/')
 
         if request.method == "POST":
             n = request.form["name"]
