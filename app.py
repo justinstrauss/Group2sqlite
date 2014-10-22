@@ -4,7 +4,7 @@
 
 from flask import Flask, render_template, request
 import sqlite3
-from populate import insert_post, insert_comment
+import populate
 import os.path
 
 # app is an instance of the Flask class
@@ -21,12 +21,13 @@ def home(title=None):
     if title==None:
         if request.method == "POST":
             t = request.form["title"]
-            a = request.form["name"]
+            #a = request.form["name"]
+            a = "Alex"
             e = request.form["entry"]
             q = '''SELECT MAX(id) FROM blogs'''
             maxID = c.execute(q).next()[0] #gets maxID in ID column to assign a new unique ID            
             if not (len(t) == 0 or len(a) == 0 or len(e) == 0):
-                insert_post(t,a,e,str(maxID + 1))
+                populate.insert_post(t,a,e,str(maxID + 1))
                 
         q = "SELECT title FROM blogs"
         result = c.execute(q)

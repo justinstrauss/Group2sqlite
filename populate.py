@@ -27,13 +27,18 @@ def setup():
     
 
 def insert_post(title, name, entry, _id):
+    conn = sqlite3.connect("blogs.db")
+    c = conn.cursor()
 
-    c.execute( '''INSERT INTO blogs VALUES(''' + title + ''', ''' + name + ''', ''' + entry + ''', ''' + _id + ''')''' )
+    base = '''INSERT INTO blogs VALUES("%s","%s","%s",%s)'''
+    c.execute(base % (title,name,entry,_id))
     conn.commit()    
     
 
 def insert_comment(name, comment, _id):
-    
+    conn = sqlite3.connect("blogs.db")
+    c = conn.cursor()
+
     c.execute( '''INSERT INTO comments VALUES(''' + name + ''', ''' + comment + ''', ''' + _id + ''')''')
     conn.commit()
 
