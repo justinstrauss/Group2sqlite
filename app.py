@@ -2,7 +2,7 @@
 # Soft Dev Pd 7
 # Database Project
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 import populate
 import os.path
@@ -46,10 +46,10 @@ def home(title=None):
         q = '''SELECT title,name,entry,id FROM blogs 
         WHERE title = "%s"''' % t
         result = c.execute(q)
-        if result.any():
+        try:
             r = result.next()
-        else:
-            return redirect('/')
+        except StopIteration:
+            return redirect(url_for('home'))
 
         if request.method == "POST":
             n = request.form["name"]
@@ -96,4 +96,4 @@ if __name__=="__main__":
     # set the instance variable debug to True
     app.debug = True
     # call the run method
-    app.run()
+    app.run(port = 5005)
