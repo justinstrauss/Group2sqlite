@@ -21,8 +21,7 @@ def home(title=None):
     if title==None:
         if request.method == "POST":
             t = request.form["title"]
-            #a = request.form["name"]
-            a = "Alex"
+            a = request.form["name"]
             e = request.form["entry"]
             q = '''SELECT MAX(id) FROM blogs'''
             maxID = c.execute(q).next()[0] #gets maxID in ID column to assign a new unique ID            
@@ -62,6 +61,7 @@ def all():
         placeholder = n.split(",")
         final.append(placeholder)
     final.remove(["title","name","entry","id"])
+    final.remove(["","","",""])
     return render_template("all.html",text = final)
                
 if __name__=="__main__":
