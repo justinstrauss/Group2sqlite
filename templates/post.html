@@ -4,6 +4,9 @@
 <head>
 <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
 <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
+<style>
+</style>
+
 </head>
 
 <body>
@@ -24,23 +27,30 @@
     <div class="pure-u-1-5"></div>
     <div class="pure-u-3-5">
 
-<h1>{{text[0]}}</h1> by {{text[1]}}
+<div style="width:93%;border:8px groove #4D69A2;padding:8px;">
+<font face="verdana">
+<h1 align="center">{{text[0]}}</h1> <center> by {{text[1]}}</center>
+<hr>
 
 <p>{{text[2]}}</p>
 
+</div>
+
+<div style="width:93%;border:8px groove #4D69A2;padding:8px;">
 <br>
 {% for c in comments %}
-{{c[0]}}: {{c[1]}} <br>
+{{c[0]}}: {{c[1]}} <br><hr>
 {% endfor %}
-
+</br>
 <br>
+</font>
 <form class="pure-form" align="center" method="POST">
     <fieldset>
 
-    <input class="pure-input-1-4" id="name" type="text" placeholder="Write your name here..." name="name">   
+    <input class="pure-input-1-1" id="name" type="text" placeholder="Write your name here..." name="name">   
     <br><br>
 
-    <textarea class="form-custom" id="entry" type="text"  placeholder="Write your comment here..." name="comment"></textarea>
+    <textarea class="form-custom" id="entry" type="text" cols="40"  placeholder="Write your comment here..." name="comment"></textarea>
     <br><br>
     
     <div class="pure-controls">
