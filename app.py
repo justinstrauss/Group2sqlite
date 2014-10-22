@@ -11,7 +11,7 @@ import os.path
 app = Flask(__name__)
 
 @app.route("/",methods=["GET","POST"])
-@app.route("/<title>")
+@app.route("/<title>",methods=["GET","POST"])
 def home(title=None):
     if not os.path.isfile("blogs.db"):
         populate.setup()
@@ -24,12 +24,14 @@ def home(title=None):
             a = request.form["name"]
             e = request.form["entry"]
             q = '''SELECT MAX(id) FROM blogs'''
-            maxID = c.execute(q).next()[0] #gets maxID in ID column to assign a new unique ID            
+            maxID = c.execute(q).next()[0] #gets maxID in ID column to assign 
+                                           #a new unique ID            
             if not (len(t) == 0 or len(a) == 0 or len(e) == 0):
                 populate.insert_post(t,a,e,str(maxID + 1))
                 
         q = "SELECT title FROM blogs"
         result = c.execute(q)
+        result = [o for o in result][::-1]
         return render_template("index.html",titles=result)
     else:
         #get blog whose title matches the url
@@ -39,11 +41,17 @@ def home(title=None):
         result = c.execute(q)
         r = result.next()
 
+        if request.method == "POST":
+            n = request.form["name"]
+            e = request.form["comment"]
+            if not (len(n) == 0 or len(e) == 0):
+                populate.insert_comment(n,e,r[3])
+                                        
         #find all comments whose id corresponds to that of the blog
         q = '''SELECT name,comment FROM comments 
                WHERE id = %s''' % r[3]
         comments = c.execute(q)
-
+        
         return render_template("post.html",text=r,comments=comments)
 
 @app.route("/about")

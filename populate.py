@@ -39,6 +39,7 @@ def insert_comment(name, comment, _id):
     conn = sqlite3.connect("blogs.db")
     c = conn.cursor()
 
-    c.execute( '''INSERT INTO comments VALUES(''' + name + ''', ''' + comment + ''', ''' + _id + ''')''')
+    base = '''INSERT INTO comments VALUES("%s","%s",%s)'''
+    c.execute(base % (name,comment,_id))
     conn.commit()
 
