@@ -73,7 +73,7 @@ def all():
     b = '''SELECT name, comment FROM comments'''
     comments = c.execute(q)
     return render_template("all.html", comments=comments, posts=posts) 
-    
+#Albert don't work all, Leslie is
 
 # @app.route("/all")
 # def all():
