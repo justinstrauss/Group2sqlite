@@ -62,7 +62,7 @@ def home(title=None):
                WHERE id = %s''' % r[3]
         comments = c.execute(q)
         
-        return render_template("post.html",text=r,comments=comments)
+        return render_template("post.html",text=r,comments=comments, c=c)
 
 @app.route("/about")
 def about():
@@ -71,12 +71,16 @@ def about():
 @app.route("/all")
 def all():
     conn = sqlite3.connect("blogs.db")
+    c = conn.cursor()
     q = '''SELECT title, name, entry,id FROM blogs'''
     posts = c.execute(q)
-    b = '''SELECT name, comment FROM comments'''
-    comments = c.execute(q)
-    return render_template("all.html", comments=comments, posts=posts) 
-#Albert don't work all, Leslie is
+
+    b = conn.cursor()
+    q = '''SELECT name, comment,id FROM comments'''
+    comments = b.execute(q)
+
+    return render_template("all.html",posts=posts, comments=comments) 
+
 
 # @app.route("/all")
 # def all():
