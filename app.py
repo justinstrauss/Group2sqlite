@@ -62,7 +62,6 @@ def home(title=None):
         #find all comments whose id corresponds to that of the blog
         q = '''SELECT name,comment FROM comments 
                WHERE id = %s''' % r[3]
-        print "q " + q
         comments = c.execute(q)
         
         return render_template("post.html",text=r,comments=comments, c=c)
