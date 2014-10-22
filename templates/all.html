@@ -18,14 +18,27 @@
     </ul>
 </div>
 <hr>
+{%for p in posts%}
+<div style="width:93%;border:8px groove #4D69A2;padding:8px;">
+<font face="verdana">
+<h1 align="center">{{p[0]}}</h1> <center> by {{p[1]}}</center>
+<hr>
 
-<body>
-  {% for n in text %}
-    <h1>{{n[0]}}</h1>
-    by {{n[1]}}
-    <br><br>
-    <p>{{n[2]}}</p>
-    <br><br>
-  {% endfor %}
+<p>{{p[2]}}</p>
+
+</div>
+
+<div style="width:93%;border:8px groove #4D69A2;padding:8px;">
+<br>
+{% for c in comments %}
+  {% if c[2] == p[3] %}
+  {{c[0]}}: {{c[1]}} <br><hr>
+  {% endif %}
+{% endfor %}
+</br>
+</div>
+<br>
+<br>
+{% endfor %}
 </body>
 </html>
