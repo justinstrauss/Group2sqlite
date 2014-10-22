@@ -35,8 +35,7 @@ def home(title=None):
                 if t in titleCheck:
                     error = True
                 else:
-                    clock = str(strftime("%I:%M:%S %m/%d/%Y"))
-                    print clock
+                    clock = strftime("%I:%M:%S %m/%d/%Y")
                     populate.insert_post(t,a,e,str(maxID + 1),clock)
                 
         q = "SELECT title FROM blogs"
