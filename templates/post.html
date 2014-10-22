@@ -27,6 +27,12 @@
 <h1>{{text[0]}}</h1> by {{text[1]}}
 
 <p>{{text[2]}}</p>
+
+<br>
+{% for c in comments %}
+{{c[0]}}: {{c[1]}} <br>
+{% endfor %}
+
 <br>
 <form class="pure-form" align="center" method="POST">
     <fieldset>
@@ -44,10 +50,7 @@
     </fieldset>
 </form>
 
-<br>
-{% for c in comments %}
-{{c[0]}}: {{c[1]}} <br>
-{% endfor %}
+
 
 
 </html>
