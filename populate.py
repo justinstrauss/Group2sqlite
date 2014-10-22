@@ -31,7 +31,7 @@ def insert_post(title, name, entry, _id):
     c = conn.cursor()
 
     base = '''INSERT INTO blogs VALUES("%s","%s","%s",%s)'''
-    c.execute(base % (title,name,entry,_id))
+    c.execute(base % (title.replace('"',"'"),name.replace('"',"'"),entry.replace('"',"'"),_id))
     conn.commit()    
     
 
@@ -40,6 +40,6 @@ def insert_comment(name, comment, _id):
     c = conn.cursor()
 
     base = '''INSERT INTO comments VALUES("%s","%s",%s)'''
-    c.execute(base % (name,comment,_id))
+    c.execute(base % (name.replace('"',"'"),comment.replace('"',"'"),_id))
     conn.commit()
 
