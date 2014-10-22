@@ -67,17 +67,27 @@ def about():
 
 @app.route("/all")
 def all():
-    f = open("blogposts.csv")
-    data = f.read()
-    f.close()
-    data = data.split("\n")
-    final = []
-    for n in data:
-        placeholder = n.split(",")
-        final.append(placeholder)
-    final.remove(["title","name","entry","id"])
-    final.remove(["","","",""])
-    return render_template("all.html",text = final)
+    conn = sqlite3.connect("blogs.db")
+    q = '''SELECT title, name, entry,id FROM blogs'''
+    posts = c.execute(q)
+    b = '''SELECT name, comment FROM comments'''
+    comments = c.execute(q)
+    return render_template("all.html", comments=comments, posts=posts) 
+    
+
+# @app.route("/all")
+# def all():
+#     f = open("blogposts.csv")
+#     data = f.read()
+#     f.close()
+#     data = data.split("\n")
+#     final = []
+#     for n in data:
+#         placeholder = n.split(",")
+#         final.append(placeholder)
+#     final.remove(["title","name","entry","id"])
+#     final.remove(["","","",""])
+#     return render_template("all.html",text = final)
                
 if __name__=="__main__":
     # set the instance variable debug to True
