@@ -80,6 +80,7 @@ def all():
     b = conn.cursor()
     q = '''SELECT name, comment,id FROM comments'''
     comments = b.execute(q)
+    comments = [[a[0],a[1],a[2]] for a in comments] 
 
     return render_template("all.html",posts=posts, comments=comments) 
 
